@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 - name: Install Dependencies
   run: apt-get ansible    
 - name: run playbook
