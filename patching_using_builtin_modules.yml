@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: yes
+  connection: ssh
+  user: ansible
+  tasks:
+    - name: gather facts
+      ansible.builtin.setup:
+
+    - name: update yum cache
+      ansible.builtin.yum:
+         name: "*"
+         state: latest
+    - name: list of available packages
+      ansible.builtin.yum_list:
+         name: "*"
+         state: latest
+    - name: prompt for confirmation
+      ansible.builtin.prompt:
+         name: comfirm_update
+         prompt: "Do you want to install available updates ? [y/N]"
+         default: "N"
+    - name: install updates
+      ansible.builtin.yum:
+         name: "*"
+         state: latest
+      when: confirm_update | lower == 'y'
