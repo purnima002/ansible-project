@@ -1,27 +1,23 @@
 on:
   push:
     branches:
-    - main
-    - release/*
-on:
+      - main
+      - release/*
   pull_request:
     branches:
-    - main  
-on:
+      - main  
   workflow_dispatch:  
 
 jobs:
   build:
     runs-on: ubuntu-latest
-- name: Install Dependencies
-  run: apt-get ansible    
-- name: run playbook
-  run: ansible-playbook patching_using_builtin_modules.yml  
-- name: Ansible CLI
-  # You may pin to the exact commit or the version.
-  # uses: tomasnorre/ansible-cli-client@bd08e0a19b445d0a2bc42877fdd7a2e9d632e8e3
-  uses: tomasnorre/ansible-cli-client@0.0.2
-  with:
-    # Command to execute
-    command: # default is ansible-playbook
-          
+    steps:
+      - name: Install Dependencies
+        run: sudo apt-get install ansible    
+      - name: Run playbook
+        run: ansible-playbook patching_using_builtin_modules.yml  
+      - name: Ansible CLI
+        uses: tomasnorre/ansible-cli-client@0.0.2
+        with:
+          # Command to execute
+          command: ansible-playbook
